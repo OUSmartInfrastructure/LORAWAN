@@ -4,6 +4,107 @@ This repository provides a comprehensive guide on setting up various hardware co
 
 # Guide
 ## [Raspberry Pi](https://github.com/OUSmartInfrastructure/LORAWAN/blob/main/Raspberry%20Pi)
+This guide gives a detailed overview of how to get started with raspberry pi 
+
+# Product Description
+Product Name: Raspberry Pi 3 
+Product Description: The Raspberry Pi 3 Model B is the third generation Raspberry Pi. 
+This powerful credit-card sized single board computer can be used for many applications and supersedes the original Raspberry Pi Model B+ and Raspberry Pi 2 Model B. 
+Whilst maintaining the popular board format the Raspberry Pi 3 Model B brings you a more powerful processer, 10x faster than the first generation Raspberry Pi. 
+Additionally it adds wireless LAN & Bluetooth connectivity making it the ideal solution for powerful connected designs.
+For more info follow this link https://us.rs-online.com/m/d/4252b1ecd92888dbb9d8a39b536e7bf2.pdf
+
+# Installation
+Begin with the raspberry OS installation. Install Raspberry Pi OS using Raspberry Pi Imager. 
+Use this link to https://www.raspberrypi.com/software/ (or) https://www.raspberrypi.com/software/operating-systems/ download
+Open the raspberry pi imager application select choose device and select the device you are using(select the model). 
+Choose the OS, choose storage(sd card). You can also edit the settings like username and password
+(You can also change them later through command line using sudo raspi-config command, but it's better to change here). 
+Set the locale settings(adding time zone), now flash the os into sd card.
+Now you can fix the parts. You need to insert SD card after seeting up the equipment.
+For detailed information on how to fix the parts use this link https://youtu.be/DdnzSmJ5Fxg?si=YDYS_Bi70eTiWGiy. Note: This is reference for setting up the parts.
+For getting started with raspberry pi follow this links https://youtu.be/aR9-gbZvBh0?si=jhLzmiA2kFvTqd6E and https://youtu.be/bea7g5isD0w?si=KTFwbOSb_EdKQ-TD
+Check the description of the videos for the github links.
+Follow the link below to get detailed overview https://youtu.be/bea7g5isD0w?si=n5sUUBpQowxnjzMq
+Once you log in to the raspberry desktop you can use the comand sudo raspi-config to make changes to password or to set time zone and language.
+As we are in US we need to select en_US.UTF-8 UTF-8
+On next selct screen select en_US.UTF-8. Now reboot to make the changes reflect.
+df -h command gives info about the sd card storage
+To increase the storage use the command sudo raspi-config, selct advanced options -> Expand file system.
+You can get EUI address by using these commands
+ip link show eth0 - if you are using ethernet cable
+ip link show wlan0 - if using router
+You will get a gateway EUI use that EUI to register your gateway in The Things Network.
+
+
+# Cloning Repository
+
+We are cloning a github repository. To clone the repository enter the command
+git clone https://github.com/robertlie/RAK831-LoraGateway-RPi ~/rak831-loragateway - using CLI
+https://github.com/robertlie/RAK831-LoRaGateway-RPi - Github link
+
+After cloning use the command ls -al you should see the cloned folder rak-831loragateway.
+Now go to this repository using cd rak-831loragateway use ls -al. You should see an install script.
+Enter this command to execute install script sudo ./install.sh
+You will see Gateway EUI. Set the configurations like region, latitude, longitude and altitude.
+After install script is executed the system reboots.
+
+Login into raspberry pi go to the folder opt i.e cd /opt then go to this folder cd /ttn-gateway
+Install script installs lora_gateway and packet_forwarder packages. go to packet_forwarder i.e cd /packet_forwarder 
+check the ttn-gateway status by using this command systemctl status ttn-gateway -l
+This should be active and run withou errors.
+
+Installing Global Json and Local Json
+
+Global configuration json file is main file it contains information related to frequency, gateway EUI.
+Install script installs global and local json files, but we will use different files.
+
+now go to cd lora_pkt_fwd folder this folder contains global_conf.json file
+Rename this file mv global_conf.json global_conf.json_orig
+
+My gateway is operating in US so download this file
+wget https://githubusercontent.com/TheThingsNetwork/gateway-conf/master/US-global_conf.json
+After downloading this file rename this file mv US-global_conf.json global_conf.json
+Reboot the raspberry pi
+Check ttn-gateway server status systemctl status ttn-gateway -l there should be no errors
+In the global_conf.json check all parameters and make sure that they align with your region like frequency, the region you are operating, etc.
+
+# Adding Gateways
+
+https://console.cloud.thethings.network/
+Follow the link and click a cluster(i.e, where your gateway is operating(location) in my case it is North America nam1)
+
+1. Go to Gateways in the top menu, and click + Register Gateway to reach the gateway registration page.
+
+2. Fill the Gateway EUI and click Confirm. Some gateways do not use a Gateway EUI (e.g. The Things Kickstarter Gateway), in which case you can 
+just click on Continue without EUI.
+
+3. Depending on whether the Gateway EUI is claimable you will either be shown the claiming form or the manual registration form.
+
+4. On the manual registration form fill in the Frequency Plan and the Gateway ID if it was not pre filled, The other fields are optional. 
+Click Register Gateway to finish. Use the frequency United States 902-928 MHz, FSB 2 Used by TTN.
+
+5. Your gateway will be created and you will be redirected to the gateway overview page of your newly created gateway.
+
+# Set Gateway Location
+
+1. Once you have added your gateway to The Things Stack, you can also set its location to be displayed on a map widget by clicking Change 
+location settings.
+
+2. If you want your gateway’s location to be publicly displayed, check the Publish location box.
+
+3. The gateway location can be manually set by entering the Latitude, Longitude and Altitude values.
+
+4. You can also check the Update from status messages box if you want to update the location based on the metadata from the incoming uplink 
+gateway status messages. The location settings you manually entered will be overwritten by the updates from the gateway status messages.
+
+5. Note: If you change the physical location of your gateway, the location update in The Things Stack will take place only after you restart the 
+gateway.
+
+Follow this link for detailed information 
+https://www.thethingsindustries.com/docs/gateways/concepts/adding-gateways/#:~:text=CLI-,Adding%20Gateways%20using%20the%20Console,click%20on%20Continue%20without%20EUI
+
+For configuring the Pi follow this link https://www.raspberrypi.com/documentation/computers/configuration.html - This is the official document.
 ## [Ada Fruit QT PY ESP32](https://github.com/OUSmartInfrastructure/LORAWAN/blob/main/Ada%20Fruit%20QT%20PY%20ESP32)
 ## [XIAO Expansion Board](https://github.com/OUSmartInfrastructure/LORAWAN/blob/main/XIAO%20Expansion%20Board%20Display)
 ## [Grove-Lora-E5](https://github.com/OUSmartInfrastructure/LORAWAN/blob/main/Grove-Lora-E5)
