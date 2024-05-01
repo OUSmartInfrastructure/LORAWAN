@@ -1,0 +1,98 @@
+#Product Details
+Product Name: SenseCAP S2105 - LoRaWAN Soil Moisture, Temperature and EC Sensor
+Product description: LoRaWAN Soil Moisture, Temperature, and EC Sensor, SenseCAP S2105. An IP66 wireless soil moisture, temperature, and EC 
+sensor that runs on batteries. Its measurement ranges are 0 ~ 100% (m³/m³), -40 ~ 80℃, and 0 to 23 dS/m. It also has built-in Bluetooth and APP 
+service for remote device management and OTA configuration.
+
+#Getting Started
+Download the SenseCAP Mate app from appstore or playstore
+You can also create an account via the SenseCAP Portal: http://sensecap.seeed.cc
+LED indicator on the Sensor Node and its status
+
+
+Actions, Description and Green LED Status
+
+Actions -> Description: First power up, press and hold for 3s -> Power on and activate the Bluetooth.
+
+Green LED Status: LED flashes at 1s frequency, waiting for Bluetooth connection. If Bluetooth not connected within1 minute, the machine would shut down again.
+
+Actions -> Description: Press once -> Reboot device and join LoRa network	
+
+Green LED Status:
+
+1. The LED will be on for 5 seconds for initialization 
+
+2. Waiting for join LoRa network: breathing light flashing 
+
+3. Join LoRa network success: LED flashes fast for 2s 
+
+4. LoRa network join failure: LED suddenly stop.
+
+Actions -> Description: Press and hold for 3s -> Activate Bluetooth again	
+
+Green LED Status:
+
+1. Waiting for Bluetooth connection: LED flashes at 1s frequency 
+
+2. Enter configuration mode after Bluetooth connection is successful: LED flashes at 2s frequency If Bluetooth is not connected within1 minute, the device will reboot and join LoRa network.
+
+Actions -> Description: Press and hold for 9s -> Power off	
+
+Green LED Status:
+
+In the 3rd seconds will start flashing at 1s frequency, until the light is steady on, release the button, the light will go out.
+
+Download the App and connect to the APP
+
+Hold down the button for three seconds, and the LED will flash once per second. If you don't use the app to connect the sensor within a minute, the device will restart or turn off.
+
+Navigate to Users and select Device Bluetooth Configuration, choose "S210X Sensor," which includes products from the S210X series. To enable Bluetooth on the sensor click the "Setup" and 
+"Advanced Configuration" buttons. Then, click "Scan" to begin the Bluetooth scanning process. (or) you can use the camera to scan the QR code on the sensor to bind the device.
+
+Choose the Sensor using its S/N (found on the label on the front of the sensor). After logging in, the sensor's basic data will be presented.
+
+After a successful Bluetooth connection, enter setup mode: LED flashes for two seconds.
+
+# Downloading the SenseCAP APP and Configuring Parameters
+
+Bind the device
+
+Click add device and scan the QR code on the device to bind the device to your account.
+
+Once you download the app open it and press the button on sensor and hold for 3 seconds, the LED will flash at 1s frequency.
+
+Click on setup and Advanced Configuration to configure the sensor via bluetooth and click scan to find for available devices.
+
+Select the sensor by S/N lable which you can find on the box
+
+Choose the platform, I am using The Things Network. If you want to use SenseCAP for Things Network It must be used with SenseCAP Outdoor Gateway.
+
+Choose the frequency plan for US choose US915.
+
+Set the interval wake up the device and collect information for certain period of time. For example, the device collects and uploads data every 60 minutes by default.
+
+The SenseCAP portal has a limit on uplink interval: minimum interval is 5 minutes. The interval using the other platforms ranges from 1 to 1440 minutes.
+
+Choose the packet policy you have 3 options
+
+2C+1N (default): 2C+1N (2 confirm packets and 1 none-confirm) is the best strategy, the mode can minimize the packet loss rate, however the device will consume the most data packet in TTN, 
+or date credits in Helium network 
+
+1C: 1C (1 confirm) the device will sleep after get 1 received confirm packet from server.
+
+1N: 1N (1 none-confirm) the device only send packet and then start to sleep, no matter the server received the data or not.
+
+Choose the activation type the OTAA is the default option. Over The Air Activation, it joins the network throughDevice EUI, App EUI, and App Key. You can also use 
+ABP Activation By Personalization, it joins the network through DevAddr, NwkSkey, and AppSkey.
+
+If you want to connect to The Things Network
+Please refer to this manual:
+https://files.seeedstudio.com/products/SenseCAP/S210X/How%20to%20Connect%20SenseCAP%20S210X%20to%20The%20Things%20Network.pdf
+
+We need to follow same procees as we did for the Lora-E5
+Navigate to THE THINGS NETWORK -> Applications -> Create Application -> Register End Device -> Enter brand name(SenseCAP) -> Model - S2105 -> Profile(region) - US_902_928
+Choose Frequency plan, I am using US 902-928 MHz, FSB (used by TTN)
+Enter the details Join EUI/ App EUI which you can find in the Sense CAP App and even on the box.
+
+
+
