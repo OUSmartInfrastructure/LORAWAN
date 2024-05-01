@@ -7,6 +7,6 @@ This repository provides a comprehensive guide on setting up various hardware co
 ## [Ada Fruit QT PY ESP32](https://github.com/OUSmartInfrastructure/LORAWAN/blob/main/Ada%20Fruit%20QT%20PY%20ESP32)
 ## [XIAO Expansion Board](https://github.com/OUSmartInfrastructure/LORAWAN/blob/main/XIAO%20Expansion%20Board%20Display)
 ## [Grove-Lora-E5](https://github.com/OUSmartInfrastructure/LORAWAN/blob/main/Grove-Lora-E5)
-## [SenseCAP S2105 Sensors](https://github.com/nikhilramini/Adafruit-QTPY-esp32-Pico/blob/main/SenseCAP%20Sensors)
+## [SenseCAP S2105 Sensors](https://github.com/OUSmartInfrastructure/LORAWAN/blob/main/SenseCAP%20Sensors)
 ## [Connecting to DataCake to display sensor data](https://github.com/nikhilramini/LoRaWAN/blob/main/Data%20Cake)
 
