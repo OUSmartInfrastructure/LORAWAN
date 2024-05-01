@@ -156,7 +156,7 @@ In the Tools → Board submenu you should see ESP32 Arduino and in that dropdown
 
 Look for the board called Adafruit QT Py ESP32.
 
-BLINK PROGRAM
+## BLINK PROGRAM
 
 ![QT PY connection](https://github.com/OUSmartInfrastructure/LORAWAN/assets/33726869/e9593dac-90a7-40f6-bc49-452d146d6de7)
 
@@ -397,6 +397,9 @@ void loop() {
   display.clearDisplay();
 }
 ## [Grove-Lora-E5](https://github.com/OUSmartInfrastructure/LORAWAN/blob/main/Grove-Lora-E5)
+
+![Grove-Wio-E5](https://github.com/OUSmartInfrastructure/LORAWAN/assets/33726869/5912790d-d304-44f4-a098-fd26a47f50cf)
+
 #Product Details
 Product Name: Grove - Wio-E5.
 Product description: The Grove - Wio-E5 features an extremely compact size, ultra-low power consumption, low cost and amazing performance.
@@ -456,6 +459,8 @@ Follow the documentation for detailed information about Lora-E5 use this link to
 https://files.seeedstudio.com/products/317990687/res/LoRa-E5%20AT%20Command%20Specification_V1.0%20.pdf
 
 #Program for serial communication between QT PY ESP32 and Grove-Lora-E5
+
+![Grove-Wio-E5 connection](https://github.com/OUSmartInfrastructure/LORAWAN/assets/33726869/40e2d820-7fc5-4b55-afa9-6c1bcb8e5d2e)
 
 #include <Arduino.h>
 
