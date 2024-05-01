@@ -113,6 +113,10 @@ with dual-core 240MHz Tensilica processor, WiFi and Bluetooth classic + BLE, add
 We add a USB to serial converter chip, some more passives, an antenna, USB C, buttons, NeoPixel and QT connector to outfit this super-hero 
 chip for any task you want to throw it at.
 
+![Adafruit QT PY ESP32 Pico](https://github.com/OUSmartInfrastructure/LORAWAN/assets/33726869/86d1815a-df59-4b8b-bc8f-35e7a1d27a00)
+
+![Pinout](https://github.com/OUSmartInfrastructure/LORAWAN/assets/33726869/96205a70-f629-47b1-a7e1-902d5202e0c5)
+
 [QT PY ESP 32](https://github.com/nikhilramini/Adafruit-QTPY-esp32-Pico/blob/master/assets/81555066/11ed5d85-2b80-4516-8d8d-460d063f736d)
 
 Getting statred with QT PY ESP32
