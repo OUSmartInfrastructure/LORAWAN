@@ -712,7 +712,7 @@ Here you will see the data displayed in real-time!
 
 ## [SenseCAP S2105 Sensors](https://github.com/OUSmartInfrastructure/LORAWAN/blob/main/SenseCAP%20Sensors)
 
-[SenseCAP S2105 Sensor](https://github.com/OUSmartInfrastructure/LORAWAN/assets/33726869/011916bf-f523-4bb8-8e74-5d584ccab251)
+<img width="604" alt="SenseCAP S2105 Sensor" src="https://github.com/OUSmartInfrastructure/LORAWAN/assets/33726869/011916bf-f523-4bb8-8e74-5d584ccab251">
 
 #Product Details
 Product Name: SenseCAP S2105 - LoRaWAN Soil Moisture, Temperature and EC Sensor
@@ -811,6 +811,9 @@ Choose Frequency plan, I am using US 902-928 MHz, FSB (used by TTN)
 Enter the details Join EUI/ App EUI which you can find in the Sense CAP App and even on the box.
 
 ## [Connecting to DataCake to display sensor data](https://github.com/OUSmartInfrastructure/LORAWAN/blob/main/Data%20Cake)
+
+![Data Cake Platform](https://github.com/OUSmartInfrastructure/LORAWAN/assets/33726869/a7a670a1-4bf5-491a-9c75-932b25bbe4ef)
+![Sensor Dashboard](https://github.com/OUSmartInfrastructure/LORAWAN/assets/33726869/a11ae197-bb62-480e-a62e-8494057db712)
 
 Website Name: DATACAKE
 First you need to have your gateways and applications configured in THE THINGS NETWORK
