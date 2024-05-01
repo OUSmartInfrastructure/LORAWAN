@@ -1,0 +1,124 @@
+Product Name: Adafruit QT PY ESP32
+Product description: This QT Py board is a thumbnail-sized PCB that features the ESP32-Pico-V3-02, an all-in-one chip that has an ESP32 chip
+with dual-core 240MHz Tensilica processor, WiFi and Bluetooth classic + BLE, adds a bunch of required passives and oscillator, 8 MB of Flash memory and 2 MB of PSRAM. 
+We add a USB to serial converter chip, some more passives, an antenna, USB C, buttons, NeoPixel and QT connector to outfit this super-hero 
+chip for any task you want to throw it at.
+
+[QT PY ESP 32](https://github.com/nikhilramini/Adafruit-QTPY-esp32-Pico/blob/master/assets/81555066/11ed5d85-2b80-4516-8d8d-460d063f736d)
+
+Getting statred with QT PY ESP32
+
+Arduino IDE Setup
+Install Arduino - The first thing you will need to do is to download the latest release of the Arduino IDE.
+https://www.arduino.cc/en/software
+
+Install CP2104 / CP2102N USB Driver
+The USB-to-Serial converter that talks to the ESP32 chip itself will need a driver on your computer's operating system. 
+https://www.silabs.com/developers/usb-to-uart-bridge-vcp-drivers?tab=downloads
+For windows download CP210x Windows Drivers or CP210x Windows Drivers with Serial Enumerator if you are not sure what to install then install both.
+For Mac install CP210x VCP Mac OSX Driver
+
+Install CH9102 / CH34X USB Driver
+Newer ESP32 boards have a different USB-to-serial converter that talks to the chip itself, and will need a driver on your computer's operating system. 
+https://www.wch-ic.com/downloads/CH341SER_ZIP.html - windows
+https://www.wch-ic.com/downloads/CH34XSER_MAC_ZIP.html - Mac
+
+Install ESP32 Board Support Package
+After you have downloaded and installed the latest version of Arduino IDE, you will need to start the IDE and navigate to the Preferences menu.
+A dialog will pop up
+
+We will be adding a URL to the new Additional Boards Manager URLs option. The list of URLs is comma separated, and you will only have to add each URL once. New Adafruit boards and updates to existing boards will automatically be picked up by the Board Manager each time it is opened. The URLs point to index files that the Board Manager uses to build the list of available & installed boards.
+
+We will only need to add one URL to the IDE in this example, but you can add multiple URLS by separating them with commas. Copy and paste the link below into the Additional Boards Manager URLs option in the Arduino IDE preferences.
+https://raw.githubusercontent.com/espressif/arduino-esp32/gh-pages/package_esp32_dev_index.json
+
+If you have multiple boards you want to support, say ESP8266 and Adafruit, have both URLs in the text box separated by a comma (,)
+
+Once done click OK to save the new preference settings.
+
+The next step is to actually install the Board Support Package (BSP). Go to the Tools → Board → Board Manager submenu. A dialog should come up with various BSPs. Search for esp32.
+Click the Install button and wait for it to finish. Once it is finished, you can close the dialog.
+
+In the Tools → Board submenu you should see ESP32 Arduino and in that dropdown it should contain the ESP32 boards along with all the latest ESP32 boards.
+
+Look for the board called Adafruit QT Py ESP32.
+
+BLINK PROGRAM
+
+Start up Arduino IDE and Select Board/Port
+Open the Arduino IDE on your computer. Now you have to tell the IDE what board you are using, and how you want to connect to it.
+In the IDE find the Tools menu. You will use this to select the board.
+
+Install NeoPixel Library
+
+You will need to add support by installing the library. Go to the Library Manager. 
+Sketch -> Include Library -> Library Manager
+Search for and install the Adafruit NeoPixel library. Install version 1.10.0
+
+New Blink Sketch
+From the File menu, select 
+Then in the new window, copy and paste this program:
+
+#include <Adafruit_NeoPixel.h>
+
+// How many internal neopixels do we have? some boards have more than one!
+#define NUMPIXELS        1
+
+Adafruit_NeoPixel pixels(NUMPIXELS, PIN_NEOPIXEL, NEO_GRB + NEO_KHZ800);
+
+// the setup routine runs once when you press reset:
+void setup() {
+  Serial.begin(115200);
+
+#if defined(NEOPIXEL_POWER)
+  // If this board has a power control pin, we must set it to output and high
+  // in order to enable the NeoPixels. We put this in an #if defined so it can
+  // be reused for other boards without compilation errors
+  pinMode(NEOPIXEL_POWER, OUTPUT);
+  digitalWrite(NEOPIXEL_POWER, HIGH);
+#endif
+
+  pixels.begin(); // INITIALIZE NeoPixel strip object (REQUIRED)
+  pixels.setBrightness(20); // not so bright
+}
+
+// the loop routine runs over and over again forever:
+void loop() {
+  // say hi
+  Serial.println("Hello!");
+  
+  // set color to red
+  pixels.fill(0xFF0000);
+  pixels.show();
+  delay(500); // wait half a second
+
+  // turn off
+  pixels.fill(0x000000);
+  pixels.show();
+  delay(500); // wait half a second
+}
+
+Verify (Compile) Sketch
+
+OK now you can click the Verify button to convert the sketch into binary data to be uploaded to the board.
+If something went wrong with compilation, you will get red warning/error text in the bottom window letting you know what the error was. It will also highlight the line with an error.
+On success you will see white text output and the message Done compiling. 
+
+Upload Sketch
+
+Once the code is verified/compiling cleanly you can upload it to your board. Click the Upload button.
+Often times you will get a warning like this, which is kind of vague:
+
+No device found on COM66 (or whatever port is selected)
+An error occurred while uploading the sketch
+
+This could be a few things.
+This could be a few things.
+
+Check again that you have the correct board selected! Many electronics boards have very similar names or look, and often times folks grab a board different from what they thought.
+
+Finally, a Blink!
+
+For more detailed information please navigate to this website
+
+https://learn.adafruit.com/adafruit-qt-py-esp32-pico/arduino-ide-setup
