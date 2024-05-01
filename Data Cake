@@ -1,0 +1,36 @@
+Website Name: DATACAKE
+First you need to have your gateways and applications configured in THE THINGS NETWORK
+Go to Datacake and create a new account, creating account is free.
+Once you login you will see your workspace there will be no devices on your workspace
+To add a device click the + Add Device button 
+Here you need to select your device and model
+My manifacturer is Seeed and the device I am using is SenseCAP S2105 Sensor
+Click next, now select the network I am using THE THINGS NETWORK, If you are using any other network you can select the network you are using
+Now, enter the DEV EUI (DEV EUI of your sensor or application) and give a name to your device
+Click next, basically this DATACAKE supports upto 5 free devices, so select on free when it asks for payment options
+Now we can see the dashboard but the misiing thing is the data that is sent from device, so now we need to bring that on DATACAKE
+First, we need to create a token in DATACAKE which we can use in THE THINGS NETWORK 
+To create a token go to members section on the sidebar, Click on API usres and create a API user by clicking on Add API User
+Give a name for your token and click on Add permission for all Devices in Workspace and now check mark the can record measurements option
+This means the token is allowed to record data on your device
+Click save and your token is created
+Now, copy the token and go to THE THINGS NETWORK on the side bar click on the integrations section
+Click on Weebhooks option and click on + Add Webhook
+Now select DATACAKE and give an ID and paste the token you copied and click on create datacake webhook
+It is pending because no data has been forwarded
+Go to DATACAKE website and send a data packet from your device now you will see the data on the dashboard
+In DATACAKE we also have a Debug section to troubleshoot the integration it tells us what is going to on
+In DATACAKE there is also an option to send downlinks from datacake to the device to configure things like transmission intervals
+But, right now the configuration has not been done to send downlinks to device
+To enable downlinks go to configuration section and scroll down until you find the LoRaWAN section
+Here you can see the downlinks are not configured, to do that click on change
+Now, enter the Dev ID which can be found in THE THINGS NETWORK, now we need to enter the server url which is the url from THE THINGS NETWORK
+but copy only the first element for ex copy us1.cloud.thethings.network
+Now we need to provide TTN Application Id which can be found in the Overview of the application in THE THINGS NETWORK
+Now we need to create an API key, this step is to authenticate DATACAKE to your devices
+Go to TTN, on side click on API keys and create one, give it a name and select Grant all current and future rights and click on create API key
+Now you need to copy the API key which you can do only once, Once you click I have copied the key, you can't access the key again
+So make sure you copy the key correctly
+Go back to datacake and paste the key and click update and now we are set to send the downlinks.
+
+
