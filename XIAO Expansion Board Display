@@ -1,0 +1,155 @@
+
+Product Name : Seeed Studio XIAO Expansion Board
+Product Description : Seeed Studio XIAO Expansion Board is a powerful functional expansion board for the Seeed Studio XIAO series. 
+This board is only half the size of the Raspberry Pi 4. The XIAO expansion board features quick prototyping, rich peripherals, and
+supports circuit python. This board includes rich peripherals
+such as OLED, RTC, SD card slot, grove connectors, lipo battery charging, buzzer, reset button, and SWD pins.
+The Seeeduino XIAO expansion board provides high-cost performance, plug and play, and needs no soldering. 
+Typical applications include SWD debugging, rapid prototyping, data display, and mini-size projects.
+For more info follow the link https://wiki.seeedstudio.com/Seeeduino-XIAO-Expansion-Board/ 
+
+# Programs(Hello world, Blink, User_input and Blink programs)
+Adafruit QT Py ESP32 Pico using the Adafruit SSD1306 library
+
+1. Blink program
+
+#include <Adafruit_NeoPixel.h>
+
+// How many internal neopixels do we have? some boards have more than one!
+#define NUMPIXELS        1
+
+Adafruit_NeoPixel pixels(NUMPIXELS, PIN_NEOPIXEL, NEO_GRB + NEO_KHZ800);
+
+// the setup routine runs once when you press reset:
+void setup() {
+  Serial.begin(115200);
+
+#if defined(NEOPIXEL_POWER)
+  // If this board has a power control pin, we must set it to output and high
+  // in order to enable the NeoPixels. We put this in an #if defined so it can
+  // be reused for other boards without compilation errors
+  pinMode(NEOPIXEL_POWER, OUTPUT);
+  digitalWrite(NEOPIXEL_POWER, HIGH);
+#endif
+
+  pixels.begin(); // INITIALIZE NeoPixel strip object (REQUIRED)
+  pixels.setBrightness(20); // not so bright
+}
+
+// the loop routine runs over and over again forever:
+void loop() {
+  // say hi
+  Serial.println("Hello!");
+  
+  // set color to red
+  pixels.fill(0xFF0000);
+  pixels.show();
+  delay(250); // wait half a second
+
+  // turn off
+  pixels.fill(0x000000);
+  pixels.show();
+  delay(500); // wait half a second
+}
+
+2. User_input and Blink program
+
+#include <Adafruit_NeoPixel.h>
+
+// How many internal neopixels do we have? some boards have more than one!
+#define NUMPIXELS        1
+#define PIN_NEOPIXEL 5   // Example pin for NeoPixels
+
+Adafruit_NeoPixel pixels(NUMPIXELS, PIN_NEOPIXEL, NEO_GRB + NEO_KHZ800);
+
+#include <Wire.h>
+#include <Adafruit_GFX.h>
+#include <Adafruit_SSD1306.h>
+
+#define SCREEN_WIDTH 128
+#define SCREEN_HEIGHT 64
+
+// Create an instance of the display
+Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, -1);
+
+void setup() {
+  Serial.begin(9600);
+
+  // Initialize I2C communication for the OLED display
+  Wire.begin();
+
+  // Initialize OLED display with I2C address 0x3C
+  if (!display.begin(SSD1306_SWITCHCAPVCC, 0x3C)) { // Change 0x3C to your display's address
+    Serial.println(F("SSD1306 allocation failed"));
+    for (;;);
+  }
+
+  // Initialize NeoPixels
+  pixels.begin(); // INITIALIZE NeoPixel strip object (REQUIRED)
+  pixels.setBrightness(20); // Set brightness
+}
+
+void loop() {
+  // Read user input from the Serial monitor
+  if (Serial.available() > 0) {
+    String userInput = Serial.readStringUntil('\n'); // Read until newline character
+
+    // Clear the display before printing new input
+    display.clearDisplay();
+
+    // Display user input on the OLED display
+    display.setTextSize(1);
+    display.setTextColor(SSD1306_WHITE);
+    display.setCursor(0, 0);
+    display.println(userInput);
+
+    // Display on the OLED screen
+    display.display();
+  }
+  
+  // Blink NeoPixel
+  pixels.fill(0xFF0000); // Set color to red
+  pixels.show(); // Display the color
+  delay(250); // Keep the color for 250 milliseconds
+
+  pixels.fill(0x000000); // Turn off the NeoPixel
+  pixels.show(); // Display the cleared NeoPixel
+  delay(250); // Wait for half a second before repeating
+}
+
+3. Hello World Program
+
+#include <Wire.h>
+#include <Adafruit_GFX.h>
+#include <Adafruit_SSD1306.h>
+
+#define SCREEN_WIDTH 128
+#define SCREEN_HEIGHT 64
+
+// Create an instance of the display
+Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, -1);
+
+void setup() {
+  // Initialize with the I2C addr 0x3D (for the 128x64)
+  if(!display.begin(SSD1306_I2C_ADDRESS, Wire)) {
+    Serial.println(F("SSD1306 allocation failed"));
+    for(;;);
+  }
+
+  // Clear the display
+  display.clearDisplay();
+  display.display();
+}
+
+void loop() {
+  // Display "Hello World!"
+  display.setTextSize(1);
+  display.setTextColor(SSD1306_WHITE);
+  display.setCursor(0, 0);
+  display.println(F("Hello World!"));
+
+  // Display on the screen
+  display.display();
+  delay(2000);  // You can adjust the delay as needed
+  display.clearDisplay();
+}
