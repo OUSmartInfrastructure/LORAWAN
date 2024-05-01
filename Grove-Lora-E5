@@ -1,0 +1,314 @@
+#Product Details
+Product Name: Grove - Wio-E5.
+Product description: The Grove - Wio-E5 features an extremely compact size, ultra-low power consumption, low cost and amazing performance.
+The Grove - Wio-E5 can endow your development boards' strong features of ultra-long transmitting range, great performance and high efficiency 
+via simple plug-and-play with the Grove connector on board. By connecting Grove, the Wio-E5 to your development boards, your devices are able to 
+communicate with and control Wio-E5 conveniently by AT command through a UART connection.
+
+#Getting Started
+
+Connecting the Grove LoRa E5 module and the QT Py ESP32 using a breadboard involves wiring the necessary connections between the two components.
+Here's a general guide on how to do this:
+
+Components Needed:
+Grove LoRa E5 module
+QT Py ESP32
+Breadboard
+Jumper wires
+
+Instructions:
+
+Power Connection:
+
+Connect the VCC pin of the Grove LoRa E5 module to the 3.3V pin on the QT Py ESP32.
+Connect the GND (Ground) pin of the Grove LoRa E5 module to the GND pin on the QT Py ESP32.
+
+Communication Connection (Serial/UART):
+
+Connect the TXD pin of the Grove LoRa E5 module to a GPIO pin that supports UART TX on the QT Py ESP32.
+Connect the RXD pin of the Grove LoRa E5 module to a GPIO pin that supports UART RX on the QT Py ESP32.
+
+Communication Connection (Serial/UART using Bread-board):
+
+Connect the TX pin of the Grove LoRa E5 module to the bread board and connect the QT Py ESP32 RX.
+Connect the RX pin of the Grove LoRa E5 module to the bread board and connect the QT Py ESP32 TX.
+
+Power Up:
+
+Ensure the connections are secure and correct.
+Connect the QT Py ESP32 to your computer using USB. 
+
+Programming:
+
+If you intend to program the QT Py ESP32 to communicate with the Grove LoRa E5 module, make sure you have the necessary software and libraries 
+installed. For the ESP32, the Arduino IDE with the ESP32 board support is commonly used.
+
+Coding:
+
+Write or upload a program to the QT Py ESP32 that communicates with the Grove LoRa E5 module using the UART (Serial) interface. 
+Use the appropriate library and commands for LoRa communication.
+
+Testing:
+
+Upload a simple test program to the QT Py ESP32 to check the communication with the Grove LoRa E5 module.
+Monitor the serial output to verify that the devices are communicating successfully.
+
+Follow the documentation for detailed information about Lora-E5 use this link to access the document 
+https://files.seeedstudio.com/products/317990687/res/LoRa-E5%20AT%20Command%20Specification_V1.0%20.pdf
+
+#Program for serial communication between QT PY ESP32 and Grove-Lora-E5
+
+#include <Arduino.h>
+
+#define MICRO_RX_PIN 0    // RX pin of microcontroller
+#define MICRO_TX_PIN 1    // TX pin of microcontroller
+#define LORA_RX_PIN 10    // RX pin of Grove-Lora-E5
+#define LORA_TX_PIN 11    // TX pin of Grove-Lora-E5
+
+void setup() {
+  Serial.begin(9600);    // Start serial communication for microcontroller
+  Serial1.begin(9600);   // Start serial communication for Grove-Lora-E5
+  Serial.println("Microcontroller and Grove-Lora-E5 communication initialized.");
+}
+
+void loop() {
+  // Check for data from microcontroller and send to Grove-Lora-E5
+  if (Serial.available() > 0) {
+    String userInput = Serial.readStringUntil('\n');  // Read user input from Serial Monitor
+    Serial.println("Sending data to Grove-Lora-E5: " + userInput);
+    Serial1.println(userInput);  // Send user input to Grove-Lora-E5
+  }
+
+  // Check for data from Grove-Lora-E5 and send to microcontroller
+  if (Serial1.available() > 0) {
+    String receivedData = Serial1.readStringUntil('\n');  // Read data from Grove-Lora-E5
+    Serial.println("Received data from Grove-Lora-E5: " + receivedData);
+    // Process received data as needed
+
+    // Echo back the received data to the microcontroller
+    Serial.println("Sending data to microcontroller: " + receivedData);
+  }
+}
+
+Commands to test Serial Communication
+
+AT
+Use to test if connection of module is OK. This is a dummy command just like other common "AT modules" 
+
+Format: 
+AT
+Return: 
++AT: OK
+
+VER
+Check firmware version. Versioning rule refers to Semantic Versioning 2.0.0. 
+Format:
+AT+ VER
+Return: 
++VER: $MAJOR.$MINOR.$PATCH
++VER: 4.0.11
+
+ID
+Use to check the ID of the LoRaWAN module, or change the ID. ID is treated as big endian numbers. 
+ReadIDFormat: AT+ ID
+/ / Read all, DevAddr( ABP) , DevEui( OTAA) , AppEui( OTAA) AT+ ID= DevAddr 
+/ / Read DevAddr AT+ ID= DevEui / / Read DevEui AT+ ID= AppEui 
+/ / Read AppEui AT+ ID= DevAddr, " devaddr"
+/ / Set new DevAddr AT+ ID= DevEui, " deveui"
+/ / Set new DevEui AT+ ID= AppEui, " appeui" 
+/ / Set new AppEui 
+Return: 
++ID: DevAddr, xx: xx: xx:xx 
++ID: DevEui, xx:xx:xx:xx:xx:xx:xx:xx 
++ID: AppEui13, xx:xx:xx:xx:xx:xx:xx:xx
+
+Change end device address (DEVADDR)(Usally not required)
+AT+ ID= DevAddr, “ 4 bytes length hex identifier” 
+eg: AT+ID=DevAddr, "01234567" 
+eg: AT+ID=DEVADDR, "01 23 45 67" 
+Return: 
++ID: DevAddr, 01:23:45:67
+
+## Grove - Wio-E5 TTN Demo
+
+Hardware Required:
+Grove LoRa E5 module
+QT Py ESP32
+Breadboard
+Jumper wires
+
+#Program for Synthetic Data Exchange
+
+#include <Arduino.h>
+#include <U8x8lib.h>
+# include <SoftwareSerial.h> 
+
+U8X8_SSD1306_128X64_NONAME_HW_I2C u8x8(/*reset=*/U8X8_PIN_NONE);
+static char recv_buf[512];
+static bool is_exist = false;
+static bool is_join = false;
+const byte rxPin = 2;
+const byte txPin = 3;
+
+const byte ultrasonicPin = 4;
+
+//----- what pin the components are connected to -----
+
+SoftwareSerial SoftSerial (rxPin, txPin);       // Set up a new SoftwareSerial object
+
+static int at_send_check_response(char *p_ack, int timeout_ms, char *p_cmd, ...) {
+  int ch;
+  int index = 0;
+  int startMillis = 0;
+  va_list args;
+  memset(recv_buf, 0, sizeof(recv_buf));
+  va_start(args, p_cmd);
+  Serial1.printf(p_cmd, args);
+  Serial.printf(p_cmd, args);
+  va_end(args);
+  delay(200);
+  startMillis = millis();
+
+  if (p_ack == NULL) {
+    return 0;
+  }
+
+  do {
+    while (Serial1.available() > 0) {
+      ch = Serial1.read();
+      recv_buf[index++] = ch;
+      Serial.print((char)ch);
+      delay(2);
+    }
+
+    if (strstr(recv_buf, p_ack) != NULL) {
+      return 1;
+    }
+
+  } while (millis() - startMillis < timeout_ms);
+  return 0;
+}
+
+static void send_synthetic_data() {
+  static int synthetic_data = 0;
+  char cmd[128];
+  sprintf(cmd, "AT+CMSGHEX=\"%04X\"\r\n", synthetic_data);
+  int ret = at_send_check_response("Done", 5000, cmd);
+  if (ret) {
+    Serial.print("Sent synthetic data: ");
+    Serial.println(synthetic_data);
+  } else {
+    Serial.print("Send failed!\r\n\r\n");
+  }
+  synthetic_data++;  // Change the synthetic data for the next iteration
+}
+
+void setup(void) {
+  u8x8.begin();
+  u8x8.setFlipMode(1);
+  u8x8.setFont(u8x8_font_chroma48medium8_r);
+
+  Serial.begin(9600);
+
+  pinMode(rxPin, INPUT);            // Define pin modes for TX and RX
+  pinMode(txPin, OUTPUT);
+  Serial1.begin(9600);
+  Serial.print("E5 LORAWAN TEST\r\n");
+  u8x8.setCursor(0, 0);
+ 
+  // Additional setup code for LoRaWAN configuration and initialization can be added here
+  if (at_send_check_response("+AT: OK", 100, "AT\r\n")) {
+    is_exist = true;
+    at_send_check_response("+ID: AppEui", 1000, "AT+ID\r\n");
+    //at_send_check_response("+ID: DevEui", 1000, "AT+ID\r\n");
+    //at_send_check_response("+ID: DevAddr", 1000, "AT+ID\r\n");
+    at_send_check_response("+MODE: LWOTAA", 1000, "AT+MODE=LWOTAA\r\n");
+    at_send_check_response("+DR: US915", 1000, "AT+DR=0\r\n");
+    at_send_check_response("+CH: NUM", 1000, "AT+CH=NUM,8\r\n");
+    at_send_check_response("+KEY: APPKEY", 1000, "AT+KEY=APPKEY,\"2B7E151628AED2A6ABF7158809CF4F3C\"\r\n");
+    at_send_check_response("+CLASS: C", 1000, "AT+CLASS=A\r\n");
+    at_send_check_response("+PORT: 8", 1000, "AT+PORT=8\r\n");
+    delay(200);
+    u8x8.setCursor(5, 0);
+    u8x8.print("LoRaWAN");
+    is_join = true;
+  } else {
+    is_exist = false;
+    Serial.print("No E5 module found.\r\n");
+    u8x8.setCursor(0, 1);
+    u8x8.print("unfound E5 !");
+  }
+}
+
+      // Additional code for joining the network can be added here
+void loop(void) {
+  if (is_exist) {
+    if (is_join) {
+      int ret = at_send_check_response("+JOIN: Network joined", 12000, "AT+JOIN\r\n");
+      if (ret) {
+        is_join = false;
+      } else {
+        at_send_check_response("+ID: AppEui", 1000, "AT+ID\r\n");
+        Serial.print("JOIN failed!\r\n\r\n");
+        delay(5000);
+      }
+    } else {
+      send_synthetic_data();  // Call the function to send synthetic data
+      delay(5000);
+    }
+  } else {
+    delay(1000);
+  }
+}
+
+TTN Console Configuration Setup
+
+Step 1. Visit The Things Network website and sign up for a new account
+
+Step 2. After logging in, click your profile and select Console
+
+Step 3. Select a cluster to start adding devices and gateways
+
+Step 4. Click Go to applications
+
+Step 5. Click + Add application
+
+Step 6. Fill Application ID and click Create application
+
+Note: Here Application name and Description are not compulsory fields. If Application name is left blank, it will use the same name as 
+Application ID by default.
+
+Step 7: Navigate to Payload formatters > Uplink, select Formatter Type as Javascript and fill the Formatter parameter as follows
+
+function Decoder(bytes, port) {
+  
+  var decoded = {};
+  if (port === 8) {
+    decoded.temp = bytes[0] <<8 | bytes[1];
+    decoded.humi = bytes[2] <<8 | bytes[3];
+  }
+
+  return decoded;
+}
+
+Step 8: Upload the Arduino code(Program for serial communication between QT PY ESP32 and Grove-Lora-E5) to QT PY ESP32, 
+and open serial monitor and enter the command AT+ID
+Note down DevEui and AppEUi generated above.
+
+Step 9: Go back to the Overview page of the created application and click + Add end device
+
+Step 10. Click Manually, to enter the registration credentials manually
+
+Step 11. Select the Frequency plan according to your region. Also make sure you use the same frequency as the gateway in which you will connect 
+this device to. Select LoRaWAN Specification 1.0.2 as the LoRaWAN® version and RP001 Regional Parameters 1.0.2 REVISION B as the Regional 
+Parameters version. These settings are according to the LoraWAN® stack of Wio-E5.
+
+Step 12. Copy and paste the previously obtained information from step 8 into DevEUI and AppEUI fields. End device ID field will be automatically
+filled when we fill DevEUI. For AppKey field, use: 2B7E151628AED2A6ABF7158809CF4F3C.
+
+Finally click Register end device.
+
+Step 14. Go back to the application page and navigate to End devices, select the created device and click Live data.
+Here you will see the data displayed in real-time!
+
+
