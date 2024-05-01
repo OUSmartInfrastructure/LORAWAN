@@ -8,5 +8,5 @@ This repository provides a comprehensive guide on setting up various hardware co
 ## [XIAO Expansion Board](https://github.com/OUSmartInfrastructure/LORAWAN/blob/main/XIAO%20Expansion%20Board%20Display)
 ## [Grove-Lora-E5](https://github.com/OUSmartInfrastructure/LORAWAN/blob/main/Grove-Lora-E5)
 ## [SenseCAP S2105 Sensors](https://github.com/OUSmartInfrastructure/LORAWAN/blob/main/SenseCAP%20Sensors)
-## [Connecting to DataCake to display sensor data](https://github.com/nikhilramini/LoRaWAN/blob/main/Data%20Cake)
+## [Connecting to DataCake to display sensor data](https://github.com/OUSmartInfrastructure/LORAWAN/blob/main/Data%20Cake)
 
