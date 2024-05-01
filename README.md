@@ -158,6 +158,8 @@ Look for the board called Adafruit QT Py ESP32.
 
 BLINK PROGRAM
 
+![QT PY connection](https://github.com/OUSmartInfrastructure/LORAWAN/assets/33726869/e9593dac-90a7-40f6-bc49-452d146d6de7)
+
 Start up Arduino IDE and Select Board/Port
 Open the Arduino IDE on your computer. Now you have to tell the IDE what board you are using, and how you want to connect to it.
 In the IDE find the Tools menu. You will use this to select the board.
@@ -238,6 +240,7 @@ https://learn.adafruit.com/adafruit-qt-py-esp32-pico/arduino-ide-setup
 
 ## [XIAO Expansion Board](https://github.com/OUSmartInfrastructure/LORAWAN/blob/main/XIAO%20Expansion%20Board%20Display)
 
+![Expansion Board](https://github.com/OUSmartInfrastructure/LORAWAN/assets/33726869/c4e9ec9a-fd62-4409-9c9f-21bfa6171b86)
 
 Product Name : Seeed Studio XIAO Expansion Board
 Product Description : Seeed Studio XIAO Expansion Board is a powerful functional expansion board for the Seeed Studio XIAO series. 
@@ -708,6 +711,9 @@ Step 14. Go back to the application page and navigate to End devices, select the
 Here you will see the data displayed in real-time!
 
 ## [SenseCAP S2105 Sensors](https://github.com/OUSmartInfrastructure/LORAWAN/blob/main/SenseCAP%20Sensors)
+
+[SenseCAP S2105 Sensor](https://github.com/OUSmartInfrastructure/LORAWAN/assets/33726869/011916bf-f523-4bb8-8e74-5d584ccab251)
+
 #Product Details
 Product Name: SenseCAP S2105 - LoRaWAN Soil Moisture, Temperature and EC Sensor
 Product description: LoRaWAN Soil Moisture, Temperature, and EC Sensor, SenseCAP S2105. An IP66 wireless soil moisture, temperature, and EC 
